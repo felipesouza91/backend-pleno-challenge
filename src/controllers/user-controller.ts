@@ -5,7 +5,6 @@ export class UserController  {
 
   constructor(private userService: UserService) {}
 
-
   async  getAll(request: Request, response: Response) {
     const users = await this.userService.findAll()
     return response.json(users);
@@ -17,13 +16,11 @@ export class UserController  {
       return response.status(400).json({message: "Id must be provided"})
     }
     const user = await this.userService.findById(id);
-    if (!user) {
-      return response.status(404).json({message: "User not found"})
-    }
+   
     const {createdAt,name,username } = user;
     return response.status(200).json({
       createdAt,id,name,username
-    })
+    })  
   }
 
   async save(request: Request, response: Response) {

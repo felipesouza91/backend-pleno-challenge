@@ -1,4 +1,3 @@
-import { User } from "../models/user"
 
 export type CreateUserInput = {
   name: string
@@ -15,7 +14,7 @@ export type UserDTO = {
   id: string;
   username: string;
   name: string
-  createdAt: string
+  createdAt: Date
 }
 
 export interface UserService {
@@ -24,9 +23,9 @@ export interface UserService {
 
   findById(id: string): Promise<UserDTO>
 
-  save(data: CreateUserInput): Promise<User>
+  save(data: CreateUserInput): Promise<UserDTO>
 
-  update(id: string, data: UpdateUserInput): Promise<UserDTO>
+  update(id: string, data: UpdateUserInput): Promise<void>
 
   delete(id: string): Promise<void>
   
