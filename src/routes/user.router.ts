@@ -27,6 +27,14 @@ userRouter.post("", (req, res) => {
 })
 
 
+userRouter.put("/:id", (req, res) => {
+  return userController.update(req,res)
+})
+
+
+userRouter.delete("/:id", (req, res) => {
+  return userController.delete(req,res)
+})
 
 export { userRouter };
 

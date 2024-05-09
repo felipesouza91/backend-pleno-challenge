@@ -1,4 +1,4 @@
-import { Request, Response, request } from "express";
+import { Request, Response } from "express";
 import { UserService } from "../domain/services/user-service";
 
 export class UserController  {
@@ -31,17 +31,17 @@ export class UserController  {
     return response.status(201).end();
   }
 
-  async update(reques: Request, response: Response) {
+  async update(request: Request, response: Response) {
     const { id } = request.params;
     if (!id) {
       return response.status(400).json({message: "Id must be provided"})
     }
-    const { name, password, confimationPassword } = reques.body;
+    const { name, password, confimationPassword } = request.body;
     await this.userService.update(id, { name, password })
     return response.status(200).end();
   }
 
-  async delete(reques: Request, response: Response) {
+  async delete(request: Request, response: Response) {
     const { id } = request.params;
     if (!id) {
       return response.status(400).json({message: "Id must be provided"})

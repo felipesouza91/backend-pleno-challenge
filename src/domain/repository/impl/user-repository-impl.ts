@@ -9,6 +9,19 @@ export class UserRespositoryImpl implements UserRepository {
   constructor() {
     this.connection = UserModel;
   }
+  async delete(id: string): Promise<void> {
+    const result = await this.connection.destroy({
+      where: {
+        id
+      }
+    })
+    if (result === 0) {
+      throw new Error("Error during update")
+    }
+    return Promise.resolve()
+  }
+
+
   async update(id: string, {name,password}: UpdateRepositoryData): Promise<void> {
     const [result] = await this.connection.update({ name, password }, { 
       where: {

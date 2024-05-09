@@ -2,7 +2,7 @@ import { api } from "./api";
 import { databaseConnection } from "./infra/database/conecction";
 
 
-databaseConnection.sync({force: true}).then(() => {
+databaseConnection.sync().then(() => {
   api.listen(3000, () => {
     console.log("Service is running")
   })  

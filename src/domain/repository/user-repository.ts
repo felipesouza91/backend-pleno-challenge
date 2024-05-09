@@ -22,6 +22,7 @@ export interface UserRepository {
 
   findByUsername(username: string): Promise<User | null >
 
-
   update(id: string, data: UpdateRepositoryData): Promise<void>
+
+  delete(id: string): Promise<void>
 }
