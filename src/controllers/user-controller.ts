@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
-import { UserRepository } from "../domain/repository/user-repository";
+import { Request, Response, request } from "express";
+import { UserService } from "../domain/services/user-service";
 
 export class UserController  {
 
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userService: UserService) {}
 
 
   async  getAll(request: Request, response: Response) {
-    const users = await this.userRepository.findAll()
+    const users = await this.userService.findAll()
     return response.json(users);
   }
 
@@ -16,7 +16,7 @@ export class UserController  {
     if (!id) {
       return response.status(400).json({message: "Id must be provided"})
     }
-    const user = await this.userRepository.findById(id);
+    const user = await this.userService.findById(id);
     if (!user) {
       return response.status(404).json({message: "User not found"})
     }
@@ -26,6 +26,31 @@ export class UserController  {
     })
   }
 
+  async save(request: Request, response: Response) {
+    const { username, name, password, confirmationPassword } = request.body;
+    await this.userService.save({
+      username, name, password
+    })
+    return response.status(201).end();
+  }
 
+  async update(reques: Request, response: Response) {
+    const { id } = request.params;
+    if (!id) {
+      return response.status(400).json({message: "Id must be provided"})
+    }
+    const { name, password, confimationPassword } = reques.body;
+    await this.userService.update(id, { name, password })
+    return response.status(200).end();
+  }
+
+  async delete(reques: Request, response: Response) {
+    const { id } = request.params;
+    if (!id) {
+      return response.status(400).json({message: "Id must be provided"})
+    }
+    await this.userService.delete(id);
+    return response.status(204).end()
+  }
 
 }
